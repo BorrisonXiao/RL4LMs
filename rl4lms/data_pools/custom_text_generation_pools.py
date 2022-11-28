@@ -491,7 +491,7 @@ class IWSLT2017EnZh(TextGenPool):
                 prompt_prefix: str = "",
                 ):
         dataset_split = CommonGen.gen_split_name(split)
-        dataset = IWSLT2017EnDe.get_dataset(dataset_split)
+        dataset = IWSLT2017EnZh.get_dataset(dataset_split)
         samples = []
         for ix, item in tqdm(enumerate(dataset),
                              desc="Preparing dataset",
