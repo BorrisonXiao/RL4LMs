@@ -183,7 +183,7 @@ if __name__ == "__main__":
         {"ep_len": 3, "ep_reward": 0.5},
     ]
 
-    tracker = Tracker(base_path, run_config, "Test run", True)
+    tracker = Tracker(base_path, run_config, "test_proj", "test_run", wandb_log=True)
     tracker.log_predictions(1, "val", predictions["1"])
     tracker.log_metrics(1, "val", metrics["1"])
     tracker.log_predictions(2, "val", predictions["2"])

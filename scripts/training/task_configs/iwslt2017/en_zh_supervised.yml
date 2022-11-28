@@ -1,18 +1,19 @@
 tokenizer:
-  model_name: t5-small
+  model_name: K024/mt5-zh-ja-en-trimmed
   padding_side: left
   truncation_side: left
   pad_token_as_eos_token: False
+  max_len: 512
 
 datapool:
   id: iwslt2017en_de
   args:
-    prompt_prefix: "translate English to German: "
+    prompt_prefix: "en2zh: "
 
 alg:
   id: supervised
   training_args:
-    per_device_train_batch_size: 48
+    per_device_train_batch_size: 32
     logging_steps: 1000
     num_train_epochs: 3
     weight_decay: 0.1
@@ -20,7 +21,7 @@ alg:
     learning_rate: 0.00001
     save_total_limit: 1
   model_type: seq2seq
-  model_name: "t5-small"
+  model_name: "K024/mt5-zh-ja-en-trimmed"
   generation_kwargs:
     post_processing_fn: null
     num_beams: 4

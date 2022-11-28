@@ -29,6 +29,7 @@ from rl4lms.envs.text_generation.utils_supervised import (get_datasets_for_causa
                                                            tokenize_seq2seq,
                                                            EvalCallack)
 from rl4lms.envs.text_generation.warm_start import TrainerWarmStartMixin
+from transformers.models.marian.modeling_marian import MarianMTModel
 
 
 def build_tokenizer(tokenizer_config: Dict[str, Any]):
@@ -40,6 +41,8 @@ def build_tokenizer(tokenizer_config: Dict[str, Any]):
         "padding_side", "left")
     tokenizer.truncation_side = tokenizer_config.get(
         "truncation_side", "left")
+    if "max_len" in tokenizer_config:
+        tokenizer.model_max_length = tokenizer_config["max_len"]
     return tokenizer
 
 
@@ -274,7 +277,8 @@ class SupervisedTrainer:
             "model_type"] == "causal" else AutoModelForSeq2SeqLM
         self._gen_kwargs = self._alg_config["generation_kwargs"]
         self._model = model_cls.from_pretrained(self._alg_config["model_name"])
-        self._model.parallelize()
+        if not isinstance(self._model, MarianMTModel):
+            self._model.parallelize()
         self._eval_batch_size = self._train_eval_config["eval_batch_size"]
 
         # setting max prompt length
