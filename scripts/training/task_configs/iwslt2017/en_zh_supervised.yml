@@ -6,7 +6,7 @@ tokenizer:
   max_len: 512
 
 datapool:
-  id: iwslt2017en_de
+  id: iwslt2017en_zh
   args:
     prompt_prefix: "en2zh: "
 

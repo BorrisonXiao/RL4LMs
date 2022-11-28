@@ -15,6 +15,7 @@ from rl4lms.data_pools.custom_text_generation_pools import (
     CRD3DialogueGeneration,
     IMDBForSeq2Seq,
     IWSLT2017EnDe,
+    IWSLT2017EnZh,
     NarrativeQA,
     ToTTo,
     WMT14PreprocessedEnDe,
@@ -96,6 +97,7 @@ class DataPoolRegistry:
         "wmt14_processed_en_de": WMT14PreprocessedEnDe,
         "wmt16newsonly": WMT16NewsOnlyDatasetEnDe,
         "iwslt2017en_de": IWSLT2017EnDe,
+        "iwslt2017en_zh": IWSLT2017EnZh,
         "crd3": CRD3DialogueGeneration,
         "daily_dialog": DailyDialog,
     }
