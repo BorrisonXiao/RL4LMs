@@ -6,7 +6,7 @@ tokenizer:
   max_len: 512
 
 reward_fn:
-  id: bert_score
+  id: bleubert
   args:
       language: en
   # id: meteor

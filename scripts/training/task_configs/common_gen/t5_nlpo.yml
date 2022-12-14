@@ -1,8 +1,9 @@
 tokenizer:
-  model_name: t5-base
+  model_name: t5-small
   padding_side: left
   truncation_side: left
   pad_token_as_eos_token: False
+  max_len: 512
 
 reward_fn:
   id: meteor
@@ -32,14 +33,14 @@ alg:
     batch_size: 64
     verbose: 1
     learning_rate: 0.000002
-    n_epochs: 5
+    n_epochs: 4
   kl_div:
     coeff: 0.001
     target_kl: 2.0
   policy:
     id: maskable_seq2seq_lm_actor_critic_policy
     args:
-      model_name: t5-base
+      model_name: t5-small
       apply_model_parallel: True
       mask_type: "learned_top_p"
       top_mask: 0.9
@@ -51,7 +52,7 @@ alg:
         max_new_tokens: 20
 
 train_evaluation:
-  eval_batch_size: 100
+  eval_batch_size: 80
   n_iters: 100
   eval_every: 10
   save_every: 20

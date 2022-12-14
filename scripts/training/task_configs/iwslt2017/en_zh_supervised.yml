@@ -6,16 +6,16 @@ tokenizer:
   max_len: 512
 
 datapool:
-  id: iwslt2017en_de
+  id: iwslt2017en_zh
   args:
     prompt_prefix: "en2zh: "
 
 alg:
   id: supervised
   training_args:
-    per_device_train_batch_size: 32
-    logging_steps: 1000
-    num_train_epochs: 3
+    per_device_train_batch_size: 16
+    logging_steps: 2000
+    num_train_epochs: 2
     weight_decay: 0.1
     lr_scheduler_type: "constant"
     learning_rate: 0.00001
@@ -30,7 +30,7 @@ alg:
 
 
 train_evaluation:
-  eval_batch_size: 50
+  eval_batch_size: 24
   metrics:
     - id: rouge
     - id: bleu

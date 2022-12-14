@@ -292,6 +292,31 @@ class BLEURewardFunction(RewardFunction):
         return 0
 
 
+class BLEUBERTRewardFunction(RewardFunction):
+    def __init__(self, language: str = "en") -> None:
+        super().__init__()
+        self._metric_bleu = BLEUMetric()
+        self._metric_bert = BERTScoreMetric(language)
+
+    def __call__(
+        self,
+        current_observation: Observation,
+        action: int,
+        next_observation: Observation,
+        done: bool,
+        meta_info: Dict[str, Any] = None,
+    ) -> float:
+        if done:
+            references = [next_observation.target_or_reference_texts]
+            predicted = [next_observation.context_text]
+            bleu_results = self._metric_bleu.compute(None, predicted, references)
+            bert_results = self._metric_bert.compute(None, predicted, references)
+            bleu_score = bleu_results["lexical/bleu"][1]
+            bert_score = bert_results["semantic/bert_score"][1]
+            return bleu_score + bert_score
+        return 0
+
+
 class SacreBleu(RewardFunction):
     def __init__(self, **args) -> None:
         super().__init__()

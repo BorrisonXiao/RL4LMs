@@ -1,15 +1,17 @@
 tokenizer:
-  model_name: t5-base
+  model_name: t5-small
   padding_side: left
   truncation_side: left
   pad_token_as_eos_token: False
+  max_len: 512
 
 reward_fn:
-  id: common_gen_preference_model
-  args:
-    device: "cpu"
-    batch_size: 5
-    model_type: "11b"
+  id: meteor
+  # id: common_gen_preference_model
+  # args:
+  #   device: "cpu"
+  #   batch_size: 3
+  #   model_type: "11b"
 
   # values:
   #   - id: rouge_combined
@@ -53,10 +55,10 @@ alg:
   id: ppo
   args:
     n_steps: 128
-    batch_size: 64
+    batch_size: 32
     verbose: 1
     learning_rate: 0.000002
-    n_epochs: 5
+    n_epochs: 4
     ent_coef: 0.01
   kl_div:
     coeff: 0.01
@@ -64,7 +66,7 @@ alg:
   policy:
     id: seq2seq_lm_actor_critic_policy
     args:
-      model_name: rajkumarrrk/t5-common-gen
+      model_name: mrm8488/t5-small-finetuned-common_gen
       apply_model_parallel: True
       prompt_truncation_side: "right"
       generation_kwargs:
@@ -88,7 +90,6 @@ train_evaluation:
       args:
         language: en
     - id: cider
-    - id: spice
     - id: diversity
       args: {}
   generation_kwargs:
